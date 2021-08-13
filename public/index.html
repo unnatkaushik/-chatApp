@@ -1,24 +1,206 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
-<body>
 
-    <form id="message-form">
-        <input type="text" name="message-text" id="message-text" placeholder="Enter Message" />
-        <button type="submit" id="submit-btn">Submit</button>
-        <button type="submit" id="location-share">Share Location</button>
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <!-- SEO Meta Tags-->
+    <meta name="keywords" content="quicky, chat, messenger, conversation, social, communication" />
+    <meta name="description"
+        content="Quicky is a Bootstrap based modern and fully responsive Messaging template to help build Messaging or Chat application fast and easy." />
+    <meta name="subject" content="communication">
+    <meta name="copyright" content="frontendmatters">
+    <meta name="revised" content="Tuesday, November 10th, 2020, 08:00 am" />
+    <title>Quicky - HTML Chat Template</title>
+    <!-- Favicon and Touch Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" href=".//apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="shortcut icon" href="http://prismthemes.com/quicky/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 
-    </form>
-    <p id="abcd"></p><br />
-    <a id="location-tag"></a>
+    <link rel="stylesheet" href="assets/webfonts/inter/inter.css">
+    <link rel="stylesheet" href="assets/css/app.min.css">
+</head>
 
+<body class="chats-tab-open">
+
+    <!-- Main Layout Start -->
+    <div class="main-layout">
+        <!-- Navigation Start -->
+        <!-- Navigation End -->
+
+        <!-- Sidebar Start -->
+        <aside class="sidebar">
+            <!-- Tab Content Start -->
+            <div class="tab-content">
+                <!-- Chat Tab Content Start -->
+                <div class="tab-pane active" id="chats-content">
+                    <div class="d-flex flex-column h-100">
+                        <div class="hide-scrollbar h-100" id="chatContactsList">
+
+                            <!-- Chat Header Start -->
+                            <div class="sidebar-header sticky-top p-2" style="
+                            height: 65px;">
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- Chat Tab Pane Title Start -->
+                                    <h4 class="font-weight-semibold mb-0">Chats</h4>
+                                    <!-- Chat Tab Pane Title End -->
+                                </div>
+
+
+                                <!-- Sidebar Header Start -->
+
+                                <!-- Sidebar Header End -->
+                            </div>
+                            <!-- Chat Header End -->
+
+                            <!-- Chat Contact List Start -->
+                            <ul class="contacts-list" id="chatContactTab" data-chat-list="">
+                                <!-- Chat Item Start -->
+                                <li class="contacts-item friends active">
+                                    <a class="contacts-link" href="javascript:;">
+
+                                        <div class="contacts-content">
+                                            <div class="contacts-info">
+                                                <h6 class="chat-name text-truncate">Catherine Richardson</h6>
+                                                <div class="chat-time">Just now</div>
+                                            </div>
+                                            <div class="contacts-texts">
+                                                <p class="text-truncate">I’m sorry, I didn’t catch that. Could you
+                                                    please repeat?</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <!-- Chat Item End -->
+                            </ul>
+                            <!-- Chat Contact List End -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Chats Tab Content End -->
+            </div>
+            <!-- Tab Content End -->
+        </aside>
+        <!-- Sidebar End -->
+
+        <!-- Main Start -->
+        <main class="main main-visible">
+
+            <!-- Chats Page Start -->
+            <div class="chats">
+                <div class="chat-body">
+
+                    <!-- Chat Header Start-->
+                    <div class="chat-header">
+
+
+                        <!-- Chat participant's Name -->
+                        <div class="media chat-name align-items-center text-truncate">
+
+
+                            <div class="media-body align-self-center ">
+                                <h6 class="text-truncate mb-0">Catherine Richardson</h6>
+                                <small class="text-muted">Online</small>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- Chat Header End-->
+
+
+                    <!-- Chat Content Start-->
+                    <div class="chat-content p-2" id="messageBody">
+                        <div class="container">
+
+                            <div class="message-day" id="abcd">
+
+                                <div class="message-divider sticky-top pb-2" data-label="Yesterday">&nbsp;</div>
+
+
+                                <!-- Received Message End -->
+                                <p></p><br />
+                                <a id="location-tag"></a>
+                                <!-- <div class="message self">
+                                    <div class="message-wrapper">
+                                        <div class="message-content">
+                                            <span>First of all, you need to understand the subject matter thoroughly.
+                                                You need to know what is global warming, what causes global warming, and
+                                                what people should do to abate the effects of global warming.</span>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+                            </div>
+                            <!-- Message Day End -->
+
+                            <!-- Message Day Start -->
+
+                        </div>
+
+                        <!-- Scroll to finish -->
+                        <div class="chat-finished" id="chat-finished"></div>
+                    </div>
+                    <!-- Chat Content End-->
+
+                    <!-- Chat Footer Start-->
+                    <div class="chat-footer">
+
+
+                        <textarea class="form-control emojionearea-form-control" id="message-text" rows="1"
+                            placeholder="Type your message here..."></textarea>
+                        <div class="btn btn-primary btn-icon send-icon rounded-circle text-light mb-1" role="button"
+                            id="submit-btn">
+                            <svg class="hw-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </div>
+
+                    </div>
+                    <!-- Chat Footer End-->
+                </div>
+
+
+            </div>
+
+
+
+        </main>
+
+
+        <div class="backdrop"></div>
+
+    </div>
+
+
+
+    <!-- Javascript Files -->
+    <script src="assets/vendors/jquery/jquery-3.5.0.min.js"></script>
+    <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="assets/vendors/svg-inject/svg-inject.min.js"></script>
+    <script src="assets/vendors/modal-stepes/modal-steps.min.js"></script>
+    <script src="assets/vendors/emojione/emojionearea.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="js/index.js"></script>
+    <script>
+        // Scroll to end of chat
+        document.querySelector('.chat-finished').scrollIntoView({
+            block: 'end',               // "start" | "center" | "end" | "nearest",
+            behavior: 'auto'          //"auto"  | "instant" | "smooth",
+        });
+
+    </script>
 </body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="socket.io/socket.io.js"></script>
-<script src="js/index.js"></script>
-<script>
-
-</script>
 
 </html>

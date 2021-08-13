@@ -1,0 +1,24 @@
+< !DOCTYPE html >
+    <html>
+
+        <body>
+
+            <form id="message-form">
+                <input type="text" name="message-text" id="message-text" placeholder="Enter Message" />
+                <button type="submit" id="submit-btn">Submit</button>
+                <button type="submit" id="location-share">Share Location</button>
+
+            </form>
+            <p id="abcd"></p><br />
+            <a id="location-tag"></a>
+
+        </body>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="socket.io/socket.io.js"></script>
+        <script src="js/index.js"></script>
+        <script>
+
+        </script>
+
+    </html>

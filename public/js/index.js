@@ -9,7 +9,7 @@ socket.on('disconnect', function () {
 
 socket.on('newMessage', function (message) {
     console.log('newMessage', message)
-    $("#abcd").append(`${message.text}<br>${message.from}<br>${message.createdAt}`);
+    $("#abcd").append(`<div class="message"><div class="message-wrapper"><div class="message-content"><span>${message.text} </span></div></div></div>`);
 })
 
 
@@ -18,7 +18,6 @@ socket.on('newMessage', function (message) {
 socket.on('newLocationMessage', function (message) {
     console.log('newLocationMessage', message)
     $("#location-tag").attr("href", message.url).text(message.from).attr("target", '_blank')
-    $("p").append(`<br>${message.from}<br>${message.url}<br>${message.createdAt}<br>`);
 })
 
 
