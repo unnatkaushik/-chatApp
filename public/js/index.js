@@ -26,7 +26,9 @@ document.querySelector('#submit-btn').addEventListener('click', function (e) {
     socket.emit('createMessage', {
         from: "user",
         text: document.querySelector('#message-text').value
-    }, function () { })
+    }, function () {
+        $('#message-text').val('')
+    })
 })
 
 document.querySelector('#location-share').addEventListener('click', function (e) {
