@@ -3,7 +3,7 @@ const app = express()
 const path = require("path")
 const http = require('http')
 const socketIO = require('socket.io');
-
+const { generateMessage, generateLocationMessage } = require('./utils/message')
 
 
 const publicPath = path.join(__dirname, './public')
@@ -16,24 +16,17 @@ const port = process.env.PORT || 3030
 io.on('connection', (socket) => {
     console.log("a new user just connected");
 
-    socket.emit('newMessage', {
-        from: "Admin",
-        text: 'Welcome to the chat room!',
-        createdat: new Date().getTime()
-    });
-    socket.broadcast.emit('newMessage', {
-        from: "Admin",
-        text: 'New User joined',
-        createdat: new Date().getTime()
+    socket.emit('newMessage', generateMessage("Admin", 'Welcome to the chat room!'));
+    socket.broadcast.emit('newMessage', generateMessage("Admin", 'New User joined'))
+
+    socket.on('createMessage', (message, callback) => {
+        console.log(message);
+        io.emit('newMessage', generateMessage(message.from, message.text))
+        callback("this ping is from server")
     })
 
-    socket.on('createMessage', (message) => {
-        console.log(message);
-        io.emit('newMessage', {
-            from: message.from,
-            text: message.text,
-            createdat: new Date().getTime()
-        })
+    socket.on('createLocationMessage', (coords) => {
+        io.emit('newLocationMessage', generateLocationMessage("Admin", coords.lat, coords.lng))
     })
     socket.on('disconnect', () => {
         console.log("user was disconnected")

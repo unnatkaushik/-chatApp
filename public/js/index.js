@@ -9,4 +9,39 @@ socket.on('disconnect', function () {
 
 socket.on('newMessage', function (message) {
     console.log('newMessage', message)
+    $("#abcd").append(`${message.text}<br>${message.from}<br>${message.createdAt}`);
+})
+
+
+
+
+socket.on('newLocationMessage', function (message) {
+    console.log('newLocationMessage', message)
+    $("#location-tag").attr("href", message.url).text(message.from).attr("target", '_blank')
+    $("p").append(`<br>${message.from}<br>${message.url}<br>${message.createdAt}<br>`);
+})
+
+
+document.querySelector('#submit-btn').addEventListener('click', function (e) {
+    e.preventDefault();
+    socket.emit('createMessage', {
+        from: "user",
+        text: document.querySelector('#message-text').value
+    }, function () { })
+})
+
+document.querySelector('#location-share').addEventListener('click', function (e) {
+    e.preventDefault()
+    if (!navigator.geolocation) {
+        return alert("geolocation not supported")
+    }
+    navigator.geolocation.getCurrentPosition(function (position) {
+        console.log(position.coords.latitude)
+        socket.emit('createLocationMessage', {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        })
+    }, function () {
+        alert('unable to fetch position')
+    })
 })
