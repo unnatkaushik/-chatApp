@@ -25,13 +25,13 @@ io.on('connection', (socket) => {
         }
 
         socket.join(params.rooms);
-        users.removeUser(socket.id);
-        users.addUser(socket.id, params.user, params.rooms)
+        console.log(users.removeUser(socket.id));
+        users.addUser(socket.id, params.user, params.rooms, new Date().toLocaleTimeString())
         io.to(params.rooms).emit('updateUserList', users.getUserList(params.rooms));
 
-
+        io.emit('updateGroupHeader', users.getUserInsideRoom(params.rooms), params.rooms)
         socket.emit('newMessage', generateMessage("Admin", `Welcome to the ${params.rooms}`));
-        socket.broadcast.to(params.rooms).emit('newMessage', generateMessage("Admin", 'New User joined'))
+        socket.broadcast.to(params.rooms).emit('newMessage', generateMessage("Admin", `${params.user} has joined the room`))
 
         callback()
     })
@@ -43,13 +43,19 @@ io.on('connection', (socket) => {
 
 
     socket.on('createMessage', (message, callback) => {
-        console.log(message);
-        io.emit('newMessage', generateMessage(message.from, message.text))
+        let user = users.getUser(socket.id)
+        if (user && isRealString(message.text)) {
+            io.to(user.room).emit('newMessage', generateMessage(user.name, message.text))
+
+        }
         callback("this ping is from server")
     })
 
     socket.on('createLocationMessage', (coords) => {
-        io.emit('newLocationMessage', generateLocationMessage("Admin", coords.lat, coords.lng))
+        let user = users.getUser(socket.id)
+        if (user) {
+            io.emit('newLocationMessage', generateLocationMessage(user.name, coords.lat, coords.lng))
+        }
     })
     socket.on('disconnect', () => {
         let user = users.removeUser(socket.id);

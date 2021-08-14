@@ -3,16 +3,22 @@ class Users {
         this.users = []
     }
 
-    addUser(id, name, room) {
-        let user = { id, name, room }
+    addUser(id, name, room, joinTime) {
+        let user = { id, name, room, joinTime }
         this.users.push(user);
         return user;
     }
 
     getUserList(room) {
         let users = this.users.filter((user) => user.room === room);
-        let nameArray = users.map((user) => user.name);
+        let nameArray = users.map((user) => user);
         return nameArray;
+    }
+
+    getUserInsideRoom(room) {
+        let users = this.users.filter((user) => user.room === room);
+        let userCount = users.length
+        return userCount;
     }
 
     getUser(id) {
