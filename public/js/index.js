@@ -24,7 +24,6 @@ socket.on('disconnect', function () {
     console.log("disconnected from server")
 })
 socket.on('updateUserList', function (users) {
-    console.log(users)
     $('#chatContactTab').empty();
     users.forEach(function (user) {
         $('#chatContactTab').append(`<li class="contacts-item friends active"><a class="contacts-link" href="javascript:;"><div class="contacts-content"><div class="contacts-info"><h6 class="chat-name text-truncate">${user.name}</h6><div class="chat-time">${user.joinTime}</div></div></div></a></li>`)
@@ -38,17 +37,25 @@ socket.on('updateGroupHeader', function (userCount, room) {
 })
 
 socket.on('newMessage', function (message) {
-    console.log('newMessage', message)
-    $("#abcd").append(`<div class="message"><div class="message-wrapper"><div class="message-content"><h6 class="text-dark">${message.from}</h6><span>${message.text}</span><br /><div class="message-options"><span class="message-date">${message.createdAt}</span></div></div></div></div>`);
+
+    if (message._id == socket.id) {
+        $("#abcd").append(`<div class="message self"><div class="message-wrapper"><div class="message-content"><h6 ><b>You</b></h6><span>${message.text}</span><br /><div class="message-options"><span class="message-date">${message.createdAt}</span></div></div></div></div>`);
+    }
+    else {
+        $("#abcd").append(`<div class="message "><div class="message-wrapper"><div class="message-content"><h6 class="text-dark">${message.from}</h6><span>${message.text}</span><br /><div class="message-options"><span class="message-date">${message.createdAt}</span></div></div></div></div>`);
+    }
     scrollToView();
 })
 
 
 socket.on('newLocationMessage', function (message) {
-    console.log('newLocationMessage', message)
-    $("#abcd").append(`<div class="message"><div class="message-wrapper"><div class="message-content"><h6 class="text-dark">${message.from}</h6> <a href="${message.url}" target="_blank">Current Location</a><br /><div class="message-options"><span class="message-date">${message.createdAt}</span></div></div></div></div>`);
-
-
+    if (message._id == socket.id) {
+        $("#abcd").append(`<div class="message self"><div class="message-wrapper"><div class="message-content"><h6 class="text-dark">${message.from}</h6> <a href="${message.url}" target="_blank" style="color: #fff;">Current Location</a><br /><div class="message-options"><span class="message-date">${message.createdAt}</span></div></div></div></div>`);
+    }
+    else {
+        $("#abcd").append(`<div class="message"><div class="message-wrapper"><div class="message-content"><h6 class="text-dark">${message.from}</h6> <a href="${message.url}" target="_blank">Current Location</a><br /><div class="message-options"><span class="message-date">${message.createdAt}</span></div></div></div></div>`);
+    }
+    scrollToView();
 })
 
 
@@ -68,7 +75,7 @@ document.querySelector('#location-share').addEventListener('click', function (e)
         return alert("geolocation not supported")
     }
     navigator.geolocation.getCurrentPosition(function (position) {
-        console.log(position.coords.latitude)
+
         socket.emit('createLocationMessage', {
             lat: position.coords.latitude,
             lng: position.coords.longitude

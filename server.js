@@ -19,19 +19,18 @@ io.on('connection', (socket) => {
 
 
     socket.on('join', (params, callback) => {
-        console.log(params)
         if (!isRealString(params.user) || !isRealString(params.rooms)) {
             return callback("Please enter a valid details")
         }
 
         socket.join(params.rooms);
-        console.log(users.removeUser(socket.id));
+        users.removeUser(socket.id);
         users.addUser(socket.id, params.user, params.rooms, new Date().toLocaleTimeString())
         io.to(params.rooms).emit('updateUserList', users.getUserList(params.rooms));
 
         io.emit('updateGroupHeader', users.getUserInsideRoom(params.rooms), params.rooms)
-        socket.emit('newMessage', generateMessage("Admin", `Welcome to the ${params.rooms}`));
-        socket.broadcast.to(params.rooms).emit('newMessage', generateMessage("Admin", `${params.user} has joined the room`))
+        socket.emit('newMessage', generateMessage("Admin", "Admin", `Welcome to the ${params.rooms}`));
+        socket.broadcast.to(params.rooms).emit('newMessage', generateMessage("Admin", "Admin", `${params.user} has joined the room`))
 
         callback()
     })
@@ -45,7 +44,7 @@ io.on('connection', (socket) => {
     socket.on('createMessage', (message, callback) => {
         let user = users.getUser(socket.id)
         if (user && isRealString(message.text)) {
-            io.to(user.room).emit('newMessage', generateMessage(user.name, message.text))
+            io.to(user.room).emit('newMessage', generateMessage(socket.id, user.name, message.text))
 
         }
         callback("this ping is from server")
@@ -54,16 +53,15 @@ io.on('connection', (socket) => {
     socket.on('createLocationMessage', (coords) => {
         let user = users.getUser(socket.id)
         if (user) {
-            io.emit('newLocationMessage', generateLocationMessage(user.name, coords.lat, coords.lng))
+            io.emit('newLocationMessage', generateLocationMessage(socket.id, user.name, coords.lat, coords.lng))
         }
     })
     socket.on('disconnect', () => {
         let user = users.removeUser(socket.id);
 
-        console.log("users", user)
         if (user) {
             io.to(user.room).emit('updateUserList', users.getUserList(user.room));
-            io.to(user.room).emit('newMessage', generateMessage("Admin", `${user.name} has left ${user.room} room`));
+            io.to(user.room).emit('newMessage', generateMessage("Admin", "Admin", `${user.name} has left ${user.room} room`));
         }
 
     })
